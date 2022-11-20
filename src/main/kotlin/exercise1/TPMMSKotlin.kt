@@ -14,6 +14,7 @@ class TPMMSKotlin(
     override fun estimatedIOCost(relation: Relation): Int = TODO()
 
     override fun sort(relation: Relation, output: BlockOutput) {
+        println("Hello Kotlin")
         TODO()
     }
 }
