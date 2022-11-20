@@ -7,6 +7,7 @@ import kotlin.Triple;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -23,7 +24,27 @@ public class TPMMSJava extends SortOperation {
 
     @Override
     public void sort(@NotNull Relation relation, @NotNull BlockOutput output) {
-        int i = 0;
+
+        Iterator iter = relation.iterator();
+        Block block = getBlockManager().load(relation.iterator().next());
+        int columnCount = (block.get(0).getColumnCount());
+        getBlockManager().release(block, false);
+
+        for (int i = 0; i < columnCount; i++) {
+            for (Block a : relation) {
+                Block b = getBlockManager().load(a);
+
+                if (b.get(0).get(i) instanceof Integer) {
+                    //System.out.println(b.get(0).get(i).getClass());
+
+                } else if (b.get(0).get(i) instanceof Double) {
+
+                } else {
+                }
+                getBlockManager().release(b, false);
+            }
+
+        /*int i = 0;
         for (Block a : relation) {
             Block b = getBlockManager().load(a);
             System.out.println("Block: " + i +", Tupel 0: " + b.get(0));
@@ -36,15 +57,15 @@ public class TPMMSJava extends SortOperation {
             if (b.get(0) = niceTriple){
 
             }*/
-            int tollerInt = 363;
-            if ((Integer)b.get(1).get(0) == tollerInt){
-                System.out.println("FU DBS 2");
-                System.out.println(b.get(1).getColumnCount());
+
+
+            /*if (b.get(1).get(0) instanceof Integer){
+                System.out.println(b.get(0).get(0).getClass());
             }
 
             i++;
-            getBlockManager().release(b, false);
+            getBlockManager().release(b, false);*/
         }
-        System.out.println("i count: " + i);
+        //System.out.println("i count: " + i);
     }
 }
